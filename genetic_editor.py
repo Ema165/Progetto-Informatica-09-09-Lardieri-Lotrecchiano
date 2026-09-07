@@ -8,7 +8,6 @@ from exceptions import (
 GENOMIC_ALPHABET = {"A", "C", "G", "T"}
 logger = logging.getLogger(__name__)
 def validate_genetic_sequence(sequence: str, sequence_name: str) -> None:
-    """Controlla che una sequenza sia una stringa non vuota composta da A, C, G e T."""
     if not isinstance(sequence, str):
         raise TypeError(f"{sequence_name} deve essere una stringa.")
     if not sequence:
@@ -33,7 +32,6 @@ def validate_genetic_sequence(sequence: str, sequence_name: str) -> None:
         f"L'insertion point contiene basi non valide: {invalid_bases_text}."
     )
 def edit_genome(genome: str, insertion_point: str, insertion: str) -> str:
-    """Inserisce l'insertion dopo l'ultima occorrenza dell'insertion point."""
     validate_genetic_sequence(genome, "genome")
     validate_genetic_sequence(insertion_point, "insertion_point")
     validate_genetic_sequence(insertion, "insertion")
@@ -49,13 +47,9 @@ def edit_genome_sequence(
     insertion_points: list[str],
     insertions: list[str],
 ) -> str:
-    """Applica gli edit in ordine, lavorando ogni volta sul genoma aggiornato."""
     validate_genetic_sequence(genome, "genome")
     if len(insertion_points) != len(insertions):
-        raise InvalidEditSequenceError(
-            "La lista degli insertion point e la lista delle insertion "
-            "devono avere la stessa lunghezza."
-        )
+        raise InvalidEditSequenceError()
     edited_genome = genome
     insertion_counter: dict[str, int] = {}
     for insertion_point, insertion in zip(insertion_points, insertions):
@@ -74,7 +68,6 @@ def find_last_valid_edit_index(
     insertion_point: str,
     insertion: str,
 ) -> int:
-    """Restituisce l'indice dell'ultima insertion valida da rimuovere."""
     search_end = len(genome)
     point_found = False
     while True:
@@ -102,7 +95,6 @@ def undo_genome_edit(
     insertion_point: str,
     insertion: str,
 ) -> str:
-    """Rimuove una sola insertion dopo l'ultimo insertion point valido."""
     validate_genetic_sequence(genome, "genome")
     validate_genetic_sequence(insertion_point, "insertion_point")
     validate_genetic_sequence(insertion, "insertion")
@@ -118,16 +110,13 @@ def undo_genome_edit_sequence(
     insertions: list[str],
     strict: bool = False,
 ) -> str:
-    """Rimuove gli edit in ordine e si ferma al primo errore, se strict è False."""
     validate_genetic_sequence(genome, "genome")
     if len(insertion_points) != len(insertions):
         raise InvalidEditSequenceError(
-            "La lista degli insertion point e la lista delle insertion "
-            "devono avere la stessa lunghezza."
         )
     edited_genome = genome
     insertion_counter: dict[str, int] = {}
-    for step, (insertion_point, insertion) in enumerate(
+    for step, (insertion_point, insertion) in (
         zip(insertion_points, insertions)
     ):
         try:
@@ -143,10 +132,6 @@ def undo_genome_edit_sequence(
         except (InvalidInsertionPointError, InvalidInsertionError) as error:
             if strict:
                 raise
-            logger.warning(
-                "undo_genome_edit_sequence interrotta allo step %d: %s",
-                step,
-                error,
-            )
+           print(f"undo_genome_edit_sequence interrotta allo step {step}: {error}")
             break
     return edited_genome
