@@ -60,17 +60,6 @@ Il programma gestisce anche alcuni casi particolari, tra cui:
 
 Gli errori vengono gestiti tramite eccezioni definite nel file `exceptions.py`.
 
-## Stile del codice
-
-Il progetto è organizzato in più moduli per mantenere il codice più ordinato e leggibile.
-
-Sono stati utilizzati:
-
-* nomi in `snake_case` per funzioni e variabili;
-* nomi in `CamelCase` per le classi di eccezione;
-* type hint per parametri e valori restituiti;
-* docstring per le funzioni principali.
-
 ## Esempio
 
 Un possibile utilizzo del programma è:
