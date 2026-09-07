@@ -1,4 +1,3 @@
-import logging
 from exceptions import (
     InvalidEditSequenceError,
     InvalidGenomeError,
@@ -6,7 +5,6 @@ from exceptions import (
     InvalidInsertionPointError,
 )
 GENOMIC_ALPHABET = {"A", "C", "G", "T"}
-logger = logging.getLogger(__name__)
 def validate_genetic_sequence(sequence: str, sequence_name: str) -> None:
     if not isinstance(sequence, str):
         raise TypeError(f"{sequence_name} deve essere una stringa.")
