@@ -5,7 +5,9 @@ from exceptions import (
     InvalidInsertionPointError,
 )
 GENOMIC_ALPHABET = {"A", "C", "G", "T"}
+
 def validate_genetic_sequence(sequence: str, sequence_name: str) -> None:
+    
     if not isinstance(sequence, str):
         raise TypeError(f"{sequence_name} deve essere una stringa.")
     if not sequence:
@@ -30,6 +32,7 @@ def validate_genetic_sequence(sequence: str, sequence_name: str) -> None:
         f"L'insertion point contiene basi non valide: {invalid_bases_text}."
     )
 def edit_genome(genome: str, insertion_point: str, insertion: str) -> str:
+    
     validate_genetic_sequence(genome, "genome")
     validate_genetic_sequence(insertion_point, "insertion_point")
     validate_genetic_sequence(insertion, "insertion")
@@ -45,9 +48,11 @@ def edit_genome_sequence(
     insertion_points: list[str],
     insertions: list[str],
 ) -> str:
+   
     validate_genetic_sequence(genome, "genome")
     if len(insertion_points) != len(insertions):
         raise InvalidEditSequenceError()
+
     edited_genome = genome
     insertion_counter: dict[str, int] = {}
     for insertion_point, insertion in zip(insertion_points, insertions):
@@ -66,6 +71,7 @@ def find_last_valid_edit_index(
     insertion_point: str,
     insertion: str,
 ) -> int:
+   
     search_end = len(genome)
     point_found = False
     while True:
@@ -93,6 +99,7 @@ def undo_genome_edit(
     insertion_point: str,
     insertion: str,
 ) -> str:
+    
     validate_genetic_sequence(genome, "genome")
     validate_genetic_sequence(insertion_point, "insertion_point")
     validate_genetic_sequence(insertion, "insertion")
@@ -108,6 +115,7 @@ def undo_genome_edit_sequence(
     insertions: list[str],
     strict: bool = False,
 ) -> str:
+    
     validate_genetic_sequence(genome, "genome")
     if len(insertion_points) != len(insertions):
         raise InvalidEditSequenceError(
@@ -130,6 +138,6 @@ def undo_genome_edit_sequence(
         except (InvalidInsertionPointError, InvalidInsertionError) as error:
             if strict:
                 raise
-           print(f"undo_genome_edit_sequence interrotta allo step {step}: {error}")
+            print(f"undo_genome_edit_sequence interrotta allo step {step}: {error}")
             break
     return edited_genome
