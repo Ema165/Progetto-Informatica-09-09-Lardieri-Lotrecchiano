@@ -35,51 +35,62 @@ In base all'operazione scelta, il programma richiede all'utente le sequenze nece
 
 ## Funzionamento
 
-1) Main.py
-l file main.py rappresenta il punto di ingresso del programma, in cui vengono richiamate ed eseguite le funzioni precedentemente definite, coordinandone il flusso di esecuzione.
+### 1. `main.py`
 
-2) Genetic_editor.py
-Contiene la logica principale del progetto.
+Il file `main.py` rappresenta il **punto di ingresso del programma**, nel quale vengono richiamate ed eseguite le funzioni precedentemente definite, coordinandone il flusso di esecuzione.
 
-Funzioni principali:
+---
 
--Validate_genetic_sequence(sequence, sequence_name)
-Controlla che una sequenza genetica sia valida.  
-Una sequenza è valida se:
-- è una stringa;
-- contiene solo caratteri appartenenti all'alfabeto genomico A, C, G, T.
+### 2. `genetic_editor.py`
 
--Edit_genome(genome, insertion_point, insertion)
- Esegue un singolo edit genetico.L'insertion viene inserita subito dopo l'ultimo insertion point presente
- nel genoma. Se l'insertion point compare più volte, viene usata solo
- l'ultima occorrenza.
+Il file `genetic_editor.py` contiene la **logica principale del progetto** e le funzioni necessarie per la gestione e la modifica delle sequenze genomiche.
 
--Edit_genome_sequence(genome, insertion_points, insertions)
- Esegue più edit consecutivi, considerando le repliche delle insertion. Gli edit vengono applicati in ordine. Ogni edit modifica il genoma, quindi gli edit successivi lavorano sul genoma già modificato.
+#### Funzioni principali
 
--Find_last_valid_edit_index
-Cerca l'ultimo punto valido in cui una insertion può essere rimossa.Un punto è valido se nel genoma è presente un insertion point seguito immediatamente dalla insertion da rimuovere.
+**`validate_genetic_sequence(sequence, sequence_name)`**
+Controlla che una sequenza genetica sia valida. Una sequenza è considerata valida se:
 
--Undo_genome_edit(genome, insertion_point, insertion)
- Annulla un singolo edit.La funzione rimuove una sola occorrenza dell'insertion, cercandola subito dopo l'ultimo insertion point valido.
+* è una stringa;
+* contiene esclusivamente caratteri appartenenti all'alfabeto genomico `A, C, G, T`.
 
--Undo_genome_edit_sequence(genome, insertion_points, insertions)
- Annulla una sequenza di edit, fermandosi se una rimozione non è valida, le rimozioni vengono tentate in ordine.
+**`edit_genome(genome, insertion_point, insertion)`**
+Esegue un singolo editing genetico. L'`insertion` viene inserita subito dopo l'ultima occorrenza di `insertion_point` presente nel genoma. Se l'`insertion_point` compare più volte, viene utilizzata esclusivamente l'ultima occorrenza.
 
-3)Exceptions.py
-Contiene le eccezioni personalizzate del progetto:
+**`edit_genome_sequence(genome, insertion_points, insertions)`**
+Esegue una sequenza di editing consecutivi, considerando le eventuali ripetizioni degli `insertion point`. Gli edit vengono applicati nell'ordine specificato. Ogni modifica aggiorna il genoma, pertanto gli edit successivi operano sul genoma già modificato.
 
--GeneticEditingError: Eccezione base per tutti gli errori legati all'editing genetico.
+**`find_last_valid_edit_index(...)`**
+Individua l'ultimo punto valido in cui è possibile rimuovere un'insertion. Un punto viene considerato valido quando nel genoma è presente un `insertion_point` seguito immediatamente dall'`insertion` da rimuovere.
 
--InvalidGenomeError:Sollevata quando una sequenza genomica contiene caratteri non validi oppure è vuota.
+**`undo_genome_edit(genome, insertion_point, insertion)`**
+Annulla un singolo edit. La funzione rimuove una sola occorrenza dell'`insertion`, cercandola immediatamente dopo l'ultimo `insertion_point` valido.
 
--InvalidInsertionPointError:Sollevata quando un insertion point è vuoto, non valido,oppure non è presente nel genoma.
+**`undo_genome_edit_sequence(genome, insertion_points, insertions)`**
+Annulla una sequenza di edit. Le rimozioni vengono tentate nell'ordine specificato e l'operazione si interrompe nel caso in cui una delle rimozioni non risulti valida.
 
--InvalidInsertionError: Sollevata quando una insertion è vuota o contiene caratteri non validi.
+---
 
--InvalidEditSequenceError:Sollevata quando una sequenza di insertion point e insertion non è coerente, per esempio se le due liste hanno lunghezze diverse.
+### 3. `exceptions.py`
 
-Servono a rendere più chiara la gestione degli errori.
+Il file `exceptions.py` contiene le **eccezioni personalizzate del progetto**, utilizzate per rendere più chiara e strutturata la gestione degli errori.
+
+#### Eccezioni principali
+
+**`GeneticEditingError`**
+Eccezione base dalla quale derivano tutti gli errori relativi alle operazioni di editing genetico.
+
+**`InvalidGenomeError`**
+Viene sollevata quando una sequenza genomica è vuota oppure contiene caratteri non validi.
+
+**`InvalidInsertionPointError`**
+Viene sollevata quando un `insertion_point` è vuoto, non valido oppure non è presente nel genoma.
+
+**`InvalidInsertionError`**
+Viene sollevata quando un'`insertion` è vuota oppure contiene caratteri non validi.
+
+**`InvalidEditSequenceError`**
+Viene sollevata quando una sequenza di `insertion point` e `insertion` non è coerente, ad esempio quando le due liste hanno lunghezze differenti.
+
 
 ## Controlli
 
