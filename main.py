@@ -6,14 +6,12 @@ from genetic_editor import (
     undo_genome_edit_sequence,
 )
 def ask_sequence(message: str) -> str:
-    """Chiede all'utente una sequenza e rimuove gli spazi iniziali e finali."""
     return input(message).strip().upper()
 def show_result(title: str, result: str) -> None:
     print(f"\n{title}")
     print("-" * len(title))
     print(result)
 def ask_edit_lists() -> tuple[list[str], list[str]]:
-    """Chiede all'utente gli insertion point e le insertion da usare."""
     number = int(input("Quanti edit vuoi eseguire? "))
     insertion_points = []
     insertions = []
